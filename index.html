@@ -9,6 +9,10 @@
       href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:,regular,600&display=swap"
+      rel="stylesheet"
+    />
     <link href="style.css" rel="stylesheet" type="" />
   </head>
   <body>
@@ -22,8 +26,20 @@
       </div>
       <div class="main">
         <h2 class="main__title">To Do:</h2>
-        <div class="main__tasks">
+        <div class="main__sort sort">
+          <span>Sort by:</span>
+          <select class="sort__select" name="sort" id="">
+            <option selected value="priority">Priority</option>
+            <option value="name">Name</option>
+          </select>
+        </div>
+        <div class="main-descriptions descriptions">
+          <h3 class="descriptions__name">Name:</h3>
+          <h3 class="descriptions__description">Description:</h3>
+          <h3 class="descriptions__priority">Priority:</h3>
+        </div>
       </div>
+      <div class="main__tasks"></div>
     </div>
     <div class="popup" id="popup">
       <div class="popup__body">

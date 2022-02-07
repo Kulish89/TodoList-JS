@@ -37,7 +37,7 @@ body {
   background: linear-gradient(to bottom right, #edc1d3, #91bdec);
   padding: 15px 0 15px 0;
 }
-/* ------------------------------------------------------------------------- */
+/* =========================================================================*/
 .wrapper {
   height: 100%;
   overflow: hidden;
@@ -72,7 +72,9 @@ body {
   font-size: 12px;
   cursor: pointer;
 }
-/* --------FORM NEW TASK---------------------------------------------- */
+
+/* ======POPUP==================================================== */
+
 .popup {
   position: fixed;
   width: 100%;
@@ -116,6 +118,10 @@ body {
 .popup__close img {
   width: 22px;
 }
+/* 
+
+ */
+/*================FORM NEW TASK================================================== */
 .form {
   display: flex;
   flex-direction: column;
@@ -180,29 +186,46 @@ body {
   width: 22px;
 }
 
-/* -----MAIN TASKS CONTAINER------------------------------------------------- */
+/* ======MAIN DESCRIPTIONS============================= */
+
+.descriptions {
+  margin: 20px 0 5px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 80%;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/*===========MAIN TASKS CONTAINER================================================ */
+
+.main__tasks {
+  width: 80%;
+}
 .main__title {
   font-size: 20px;
   font-weight: 700;
 }
 .task {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 80%;
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
   border-bottom: solid #e0e0e0 1px;
 }
 .task__delete img {
   width: 22px;
 }
 .task__name {
+  padding: 0 5px;
   font-size: 14px;
   font-weight: 400;
 }
 .task__description {
   font-size: 14px;
   font-weight: 400;
+  padding: 0 5px;
 }
 .task__priority-text {
   font-size: 12px;
@@ -211,12 +234,33 @@ body {
 }
 .task__priority {
   display: flex;
-  justify-content: space-between;
-  width: 130px;
+  align-items: center;
+  padding: 0 5px;
 }
 .task-priority-left {
   display: flex;
   gap: 4px;
   align-items: center;
-  justify-content: center;
+  width: 40%;
+}
+
+/* sort============================================================ */
+
+.sort {
+  padding: 5px 10px;
+  font-family: "Poppins";
+  font-size: 14px;
+  color: #7d859a;
+  border: 1.5px #e0e0e0 solid;
+  border-radius: 5px;
+  display: inline-block;
+}
+.none {
+  display: none;
+}
+
+.sort__select {
+  font-family: "Poppins";
+  font-size: 14px;
+  color: #7d859a;
 }
