@@ -1,4 +1,4 @@
-// ===== находим основные элементы страицы=================================
+//
 let addNewTaskButton = document.querySelector(".head__button");
 let closeTaskButton = document.querySelector(".popup__close");
 let form = document.getElementById("form");
@@ -6,18 +6,20 @@ let popup = document.querySelector(".popup");
 let message = document.querySelector(".head__message");
 let sort = document.querySelector(".sort");
 let select = document.querySelector(".sort__select");
+const PRIORITY = { Critical: 3, Normal: 2, Minor: 1 };
 
-// ======устанавливаем Storage и рендерим страницу=====================
-setStorage();
+//
+localStorage.clear();
+setStorage(select.value);
 render();
 
-// ====Вешаем события на кнопки, форму и select =======================
+//
 
 addNewTaskButton.addEventListener("click", function (e) {
   popup.classList.add("open");
   popup.addEventListener("click", function (e) {
     if (!e.target.closest(".popup__content")) {
-      e.target.closest(".popup").classList.remove("open");
+      popup.classList.remove("open");
       form.reset();
     }
   });
@@ -25,7 +27,7 @@ addNewTaskButton.addEventListener("click", function (e) {
 });
 
 closeTaskButton.addEventListener("click", function (e) {
-  closeTaskButton.closest(".popup").classList.remove("open");
+  popup.classList.remove("open");
   form.reset();
   e.preventDefault();
 });
@@ -33,18 +35,11 @@ closeTaskButton.addEventListener("click", function (e) {
 form.addEventListener("submit", function (e) {
   let formdata = new FormData(form);
   let newObj = {};
+  newObj.id = Date.now();
   for (let [name, value] of formdata) {
     newObj[name] = value;
-    switch (value) {
-      case "Critical":
-        newObj.priority = 3;
-        break;
-      case "Normal":
-        newObj.priority = 2;
-        break;
-      case "Minor":
-        newObj.priority = 1;
-        break;
+    if (name === "prioritySelector") {
+      newObj.priority = PRIORITY[value];
     }
   }
   creatNewData(newObj);
@@ -61,9 +56,9 @@ select.addEventListener("change", function (e) {
   render();
 });
 
-// ===== функции работы с данными=================================
+//
 
-// ========добавляем новый объект в Localstorage, в массив data======
+//
 function creatNewData(obj) {
   let currentData = JSON.parse(localStorage.getItem("data"));
   currentData.push(obj);
@@ -71,49 +66,38 @@ function creatNewData(obj) {
 }
 //
 //
-//====== функция-обработчик события: удаление задачи из списка======================
-function deleteTask(but) {
+//
+function deleteTask(id) {
   let answer = confirm("Are you sure?");
   if (answer) {
-    let objectName = but.closest(".task").firstChild.innerHTML;
     let newData = JSON.parse(localStorage.getItem("data")).filter((elem) => {
-      return elem.name !== objectName;
+      return elem.id !== id;
     });
     localStorage.setItem("data", JSON.stringify(newData));
     render();
   }
 }
-// =====render - сбор, сортировка данных с Localstorage, рендер всей станицы: задач, главного сообщения и окна сотировки=====================
+//
+//
+
 function render() {
   let container = document.querySelector(".main__tasks");
   let data = JSON.parse(localStorage.getItem("data"));
   let sortSelector = localStorage.getItem("sort");
-  let sortedData;
-  if (sortSelector == "priority") {
-    sortedData = data.sort((obj1, obj2) => obj2.priority - obj1.priority);
-  } else if (sortSelector == "name") {
-    sortedData = data.sort((obj1, obj2) => obj2.name - obj1.name);
-  }
   let content = "";
+  let sortedData = sortData(data, sortSelector);
   sortedData.forEach((task) => {
     content += createHTMLTask(task);
   });
   container.innerHTML = content;
-  let deleteButtons = document.querySelectorAll(".task__delete");
-  for (let button of deleteButtons) {
-    button.addEventListener("click", (e) => {
-      deleteTask(button);
-      e.preventDefault();
-    });
-  }
-  editMessage(sortedData);
-  toggleSortContainer(sortedData);
+  editMessage(sortedData.length);
+  showSortContainer(sortedData.length);
 }
 //
 
-// ===========функция создает HTML разметку для каждой Task.
+// ===========
 function createHTMLTask(object) {
-  return `<div class="task"><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p><div class="task__priority">
+  return `<div class="task" id = "${object.id}"><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p><div class="task__priority">
   <div class="task-priority-left">
     <img
       class="task__priority-icon"
@@ -122,7 +106,7 @@ function createHTMLTask(object) {
     />
     <span class="task__priority-text">${object.prioritySelector}</span>
   </div>
-  <a class="task__delete" href="#">
+  <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
     <img src="./img/delete.svg" alt="" />
   </a>
 </div>
@@ -130,21 +114,21 @@ function createHTMLTask(object) {
 }
 //
 //
-// ==========функция меняет текст главного собщения на странице в зависимости от Data
-function editMessage(data) {
-  if (data.length == 0) {
+//
+function editMessage(length) {
+  if (length == 0) {
     message.innerHTML = "No tasks today! Don't worry";
-  } else if (data.length == 1) {
-    message.innerHTML = `You've got <span style="color:#F3477A">${data.length} task</span> today!`;
+  } else if (length == 1) {
+    message.innerHTML = `You've got <span style="color:#F3477A">${length} task</span> today!`;
   } else {
-    message.innerHTML = `You've got <span style="color:#F3477A">${data.length} tasks</span> today!`;
+    message.innerHTML = `You've got <span style="color:#F3477A">${length} tasks</span> today!`;
   }
 }
 //
 //
-// ============= включение и выключения окна сортировки в зависимости от количества задча=====================================================================
-function toggleSortContainer(data) {
-  if (data.length <= 1) {
+//
+function showSortContainer(length) {
+  if (length <= 1) {
     sort.classList.add("none");
   } else {
     sort.classList.remove("none");
@@ -152,12 +136,29 @@ function toggleSortContainer(data) {
 }
 //
 //
-// =======установка начального storage===================================
-function setStorage() {
+// =======Set Storage==================================
+function setStorage(value) {
   if (localStorage.getItem("data") == null) {
     localStorage.setItem("data", JSON.stringify([]));
   }
   if (localStorage.getItem("sort") == null) {
-    localStorage.setItem("sort", select.value);
+    localStorage.setItem("sort", value);
   }
+}
+// ===========Sort data================
+
+function sortData(data, selector) {
+  return data.sort(function (obj1, obj2) {
+    if (selector == "name") {
+      if (obj1[selector].toUpperCase() < obj2[selector].toUpperCase()) {
+        return -1;
+      }
+      if (obj1[selector].toUpperCase() > obj2[selector].toUpperCase()) {
+        return 1;
+      }
+      return 0;
+    } else {
+      return obj2[selector] - obj1[selector];
+    }
+  });
 }
