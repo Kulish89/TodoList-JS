@@ -36,11 +36,12 @@ body {
   font-family: "Montserrat";
   background: linear-gradient(to bottom right, #edc1d3, #91bdec);
   padding: 15px 0 15px 0;
+  overflow: auto;
 }
 /* =========================================================================*/
 .wrapper {
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   margin: 0 auto;
   flex-direction: column;
@@ -136,6 +137,32 @@ body {
   width: 100%;
   margin-bottom: 30px;
 }
+.form__input-error {
+  position: absolute;
+  color: #ffffff;
+  background-color: red;
+  opacity: 0.4;
+  top: 67px;
+  left: 40px;
+  border-radius: 5px;
+  padding: 2px 3px;
+  display: none;
+}
+.form__textarea-error {
+  position: absolute;
+  color: #ffffff;
+  background-color: red;
+  opacity: 0.4;
+  top: 140px;
+  left: 40px;
+  border-radius: 5px;
+  padding: 2px 3px;
+  display: none;
+}
+.active {
+  display: initial;
+}
+
 .form__textarea {
   padding: 5px;
   border-radius: 5px;
@@ -263,4 +290,7 @@ body {
   font-family: "Poppins";
   font-size: 14px;
   color: #7d859a;
+}
+.error {
+  box-shadow: 0 0 5px red;
 }

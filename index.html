@@ -48,26 +48,30 @@
             ><img src="./img/close.svg" alt=""
           /></a>
           <form
+            novalidate
             action="#"
             class="popup__form form"
             id="form"
             enctype="multipart/form-data"
           >
             <input
-              id="name"
               type="text"
               name="name"
               placeholder="Name"
-              class="form__input"
+              class="form__input _req"
               value=""
+              required
             />
+            <span class="form__input-error"></span>
             <textarea
               type="text"
               name="description"
               placeholder="Description"
-              class="form__textarea"
+              class="form__textarea _req"
               value=""
+              required
             ></textarea>
+            <span class="form__textarea-error"></span>
             <div class="form__priority-text">
               <p>Proirity Selector</p>
               <div class="form__radio-inputs">
