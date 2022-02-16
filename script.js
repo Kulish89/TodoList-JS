@@ -1,7 +1,7 @@
 //
 let addNewTaskButton = document.querySelector(".head__button");
 let closeTaskButton = document.querySelector(".popup__close");
-let form = document.getElementById("form");
+let form = document.querySelector("form");
 let popup = document.querySelector(".popup");
 let message = document.querySelector(".head__message");
 let sort = document.querySelector(".sort");
@@ -15,6 +15,7 @@ const PRIORITY = { Critical: 3, Normal: 2, Minor: 1 };
 
 //
 //
+
 setStorage(select.value);
 render();
 
@@ -47,17 +48,22 @@ form.addEventListener("submit", function (e) {
   if (error === 0) {
     let formdata = new FormData(form);
     let newObj = {};
-    newObj.id = Date.now();
     for (let [name, value] of formdata) {
       newObj[name] = value;
       if (name === "prioritySelector") {
         newObj.priority = PRIORITY[value];
       }
     }
+    if (!form.id) {
+      newObj.id = Date.now();
+    } else {
+      newObj.id = +form.id;
+    }
     creatNewData(newObj);
     popup.classList.remove("open");
-    resetForm();
+
     render();
+    resetForm();
   }
 });
 
@@ -81,8 +87,9 @@ select.addEventListener("change", function (e) {
 //
 function creatNewData(obj) {
   let currentData = JSON.parse(localStorage.getItem("data"));
-  currentData.push(obj);
-  localStorage.setItem("data", JSON.stringify(currentData));
+  let newData = currentData.filter((item) => item.id !== obj.id);
+  newData.push(obj);
+  localStorage.setItem("data", JSON.stringify(newData));
 }
 
 function deleteTask(id) {
@@ -94,6 +101,29 @@ function deleteTask(id) {
     localStorage.setItem("data", JSON.stringify(newData));
     render();
   }
+}
+
+function editTask(id) {
+  let data = JSON.parse(localStorage.getItem("data"));
+  let taskToEdit = data.find((item) => {
+    return item.id === id;
+  });
+  reqInput.value = taskToEdit.name;
+  reqTextarea.value = taskToEdit.description;
+  let inputs = document.getElementsByName("prioritySelector");
+  for (let input of inputs) {
+    if (input.value == taskToEdit.prioritySelector) {
+      input.checked = true;
+    }
+  }
+  form.id = id;
+  popup.classList.add("open");
+  popup.addEventListener("click", function (e) {
+    if (!e.target.closest(".popup__content")) {
+      popup.classList.remove("open");
+      resetForm();
+    }
+  });
 }
 
 function render() {
@@ -120,6 +150,9 @@ function createHTMLTask(object) {
     />
     <span class="task__priority-text">${object.prioritySelector}</span>
   </div>
+  <a class="task__edit" href="#" onclick="editTask(${object.id})">
+    <img src="./img/edit.svg" alt="" />
+  </a>
   <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
     <img src="./img/delete.svg" alt="" />
   </a>
@@ -200,5 +233,6 @@ function resetForm() {
     reqElem.nextElementSibling.innerText = "";
     reqElem.nextElementSibling.classList.remove("active");
   }
+  form.id = "";
   form.reset();
 }

@@ -25,21 +25,49 @@
         </a>
       </div>
       <div class="main">
-        <h2 class="main__title">To Do:</h2>
-        <div class="main__sort sort">
-          <span>Sort by:</span>
-          <select class="sort__select" name="sort" id="">
-            <option selected value="priority">Priority</option>
-            <option value="name">Name</option>
-          </select>
+        <div class="main__to-do">
+          <h2 class="main__title">To Do:</h2>
+          <div class="main__sort sort">
+            <span>Sort by:</span>
+            <select class="sort__select" name="sort" id="">
+              <option selected value="priority">Priority</option>
+              <option value="name">Name</option>
+            </select>
+          </div>
+          <div class="main-descriptions descriptions">
+            <h3 class="descriptions__name">Name:</h3>
+            <h3 class="descriptions__description">Description:</h3>
+            <h3 class="descriptions__priority">Priority:</h3>
+          </div>
+          <div class="main__tasks"></div>
         </div>
-        <div class="main-descriptions descriptions">
-          <h3 class="descriptions__name">Name:</h3>
-          <h3 class="descriptions__description">Description:</h3>
-          <h3 class="descriptions__priority">Priority:</h3>
+        <div class="main-completed completed">
+          <h2 class="completed__title">Completed:</h2>
+          <div class="completed__descriptions">
+            <h3 class="completed__descriptions-name">Name:</h3>
+          </div>
+          <div class="completed__tasks">
+            <div class="completed__task">
+              <h3 class="completed__task-name">Andrey</h3>
+              <a class="task__delete" href="#">
+                <img src="./img/delete.svg" alt="" />
+              </a>
+            </div>
+            <div class="completed__task">
+              <h3 class="completed__task-name">Task 2</h3>
+              <a class="task__delete" href="#">
+                <img src="./img/delete.svg" alt="" />
+              </a>
+            </div>
+            <div class="completed__task">
+              <h3 class="completed__task-name">Task 3</h3>
+              <a class="task__delete" href="#">
+                <img src="./img/delete.svg" alt="" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="main__tasks"></div>
     </div>
     <div class="popup" id="popup">
       <div class="popup__body">
@@ -51,7 +79,7 @@
             novalidate
             action="#"
             class="popup__form form"
-            id="form"
+            id=""
             enctype="multipart/form-data"
           >
             <input

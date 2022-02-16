@@ -147,6 +147,7 @@ body {
   border-radius: 5px;
   padding: 2px 3px;
   display: none;
+  box-shadow: 3px 3px 5px black;
 }
 .form__textarea-error {
   position: absolute;
@@ -158,6 +159,7 @@ body {
   border-radius: 5px;
   padding: 2px 3px;
   display: none;
+  box-shadow: 3px 3px 5px black;
 }
 .active {
   display: initial;
@@ -218,17 +220,20 @@ body {
 .descriptions {
   margin: 20px 0 5px 0;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 80%;
+  grid-template-columns: 1fr 1fr 0.7fr;
   font-family: "Poppins";
   font-size: 16px;
   font-weight: 600;
 }
 
 /*===========MAIN TASKS CONTAINER================================================ */
-
+.main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 40px;
+}
 .main__tasks {
-  width: 80%;
+  width: 100%;
 }
 .main__title {
   font-size: 20px;
@@ -237,12 +242,16 @@ body {
 .task {
   padding: 10px 0;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 0.7fr;
+  align-items: center;
   width: 100%;
   border-bottom: solid #e0e0e0 1px;
 }
 .task__delete img {
-  width: 22px;
+  width: 20px;
+}
+.task__edit img {
+  width: 20px;
 }
 .task__name {
   padding: 0 5px;
@@ -261,6 +270,7 @@ body {
 }
 .task__priority {
   display: flex;
+  gap: 8px;
   align-items: center;
   padding: 0 5px;
 }
@@ -270,7 +280,32 @@ body {
   align-items: center;
   width: 40%;
 }
-
+/* =====block of completed tasks ============================================= */
+.completed__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+.completed__descriptions {
+  margin: 20px 0 5px 0;
+}
+.completed__descriptions-name {
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+}
+.completed__task-name {
+  padding: 0 5px;
+  font-size: 14px;
+  font-weight: 400;
+}
+.completed__task {
+  padding: 10px 0;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 0.3fr;
+  width: 100%;
+  border-bottom: solid #e0e0e0 1px;
+}
 /* sort============================================================ */
 
 .sort {
