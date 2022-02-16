@@ -54,6 +54,7 @@ form.addEventListener("submit", function (e) {
         newObj.priority = PRIORITY[value];
       }
     }
+    newObj.completed = false;
     if (!form.id) {
       newObj.id = Date.now();
     } else {
@@ -125,23 +126,44 @@ function editTask(id) {
     }
   });
 }
+function toggleStatusTask(id) {
+  let answer = confirm("Are you sure?");
+  if (answer) {
+    let data = JSON.parse(localStorage.getItem("data"));
+    let task = data.find((item) => {
+      return item.id === id;
+    });
+    task.completed = !task.completed;
 
+    localStorage.setItem("data", JSON.stringify(data));
+    render();
+  }
+}
 function render() {
-  let container = document.querySelector(".main__tasks");
+  let containerToDo = document.querySelector(".main__tasks");
+  let containerCompleted = document.querySelector(".completed__tasks");
   let data = JSON.parse(localStorage.getItem("data"));
+  let toDoTasks = data.filter((item) => item.completed == false);
   let sortSelector = localStorage.getItem("sort");
-  let content = "";
-  let sortedData = sortData(data, sortSelector);
-  sortedData.forEach((task) => {
-    content += createHTMLTask(task);
+  let toDoContent = "";
+  let completedContent = "";
+  let sortedToDoTasks = sortData(toDoTasks, sortSelector);
+  sortedToDoTasks.forEach((task) => {
+    toDoContent += createHTMLTask(task);
   });
-  container.innerHTML = content;
-  editMessage(sortedData.length);
-  showSortContainer(sortedData.length);
+  containerToDo.innerHTML = toDoContent;
+  editMessage(sortedToDoTasks.length);
+  showSortContainer(sortedToDoTasks.length);
+
+  let completedTasks = data.filter((item) => item.completed == true);
+  completedTasks.forEach((task) => {
+    completedContent += createHTMLCompletedTask(task);
+  });
+  containerCompleted.innerHTML = completedContent;
 }
 
 function createHTMLTask(object) {
-  return `<div class="task" id = "${object.id}"><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p><div class="task__priority">
+  return `<div class="task" id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p><div class="task__priority">
   <div class="task-priority-left">
     <img
       class="task__priority-icon"
@@ -159,7 +181,14 @@ function createHTMLTask(object) {
 </div>
 </div>`;
 }
-
+function createHTMLCompletedTask(object) {
+  return `<div class="completed__task" id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><h3 class="completed__task-name">${object.name}</h3>
+  <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
+    <img src="./img/delete.svg" alt="" />
+  </a>
+</div>
+</div>`;
+}
 function editMessage(length) {
   if (length == 0) {
     message.innerHTML = "No tasks today! Don't worry";
