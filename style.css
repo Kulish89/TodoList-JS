@@ -215,53 +215,46 @@ body {
   width: 22px;
 }
 
-/* ======MAIN DESCRIPTIONS============================= */
-
-.descriptions {
-  margin: 20px 0 5px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 0.7fr;
-  font-family: "Poppins";
-  font-size: 16px;
-  font-weight: 600;
-}
-
 /*===========MAIN TASKS CONTAINER================================================ */
 .main {
   display: grid;
-  grid-template-columns: 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 40px;
 }
 .main__tasks {
-  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 .main__title {
   font-size: 20px;
   font-weight: 700;
+  margin-bottom: 10px;
 }
 .task {
-  padding: 10px 0;
+  padding: 10px 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 0.7fr;
-  align-items: center;
-  width: 100%;
-  border-bottom: solid #e0e0e0 1px;
+  grid-template-columns: 2fr 1fr;
+  width: 60%;
+  border: solid #e0e0e0 1px;
+  border-radius: 5px;
 }
 .task__delete img {
-  width: 20px;
+  width: 18px;
 }
 .task__edit img {
-  width: 20px;
+  width: 18px;
 }
 .task__name {
-  padding: 0 5px;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 .task__description {
   font-size: 14px;
   font-weight: 400;
-  padding: 0 5px;
+  color: #5c626d;
 }
 .task__priority-text {
   font-size: 12px;
@@ -270,41 +263,46 @@ body {
 }
 .task__priority {
   display: flex;
+  flex-direction: column;
   gap: 8px;
   align-items: center;
+  justify-content: center;
   padding: 0 5px;
 }
 .task-priority-left {
   display: flex;
   gap: 4px;
   align-items: center;
-  width: 40%;
+  justify-content: center;
+}
+.task__priority-icon {
+  width: 10px;
 }
 /* =====block of completed tasks ============================================= */
 .completed__title {
   font-size: 20px;
   font-weight: 700;
+  margin-bottom: 10px;
 }
-.completed__descriptions {
-  margin: 20px 0 5px 0;
-}
-.completed__descriptions-name {
-  font-family: "Poppins";
-  font-size: 16px;
-  font-weight: 600;
-}
+
 .completed__task-name {
-  padding: 0 5px;
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 .completed__task {
-  padding: 10px 0;
+  padding: 10px 10px;
   display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 60%;
+  border: solid #e0e0e0 1px;
+  border-radius: 5px;
+}
+.completed__task-options {
+  display: flex;
   align-items: center;
-  grid-template-columns: 1fr 0.3fr;
-  width: 100%;
-  border-bottom: solid #e0e0e0 1px;
+  justify-content: end;
+  gap: 4px;
 }
 /* sort============================================================ */
 

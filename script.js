@@ -165,29 +165,40 @@ function render() {
 }
 
 function createHTMLTask(object) {
-  return `<div class="task" id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p><div class="task__priority">
-  <div class="task-priority-left">
-    <img
-      class="task__priority-icon"
-      src="./img/${object.prioritySelector}.svg"
-      alt=""
-    />
-    <span class="task__priority-text">${object.prioritySelector}</span>
+  return `<div class="task"  id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><div><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p></div>
+  <div class="task__priority">
+    <div class="task-priority-left">
+      <img
+        class="task__priority-icon"
+        src="./img/${object.prioritySelector}.svg"
+        alt=""
+      />
+      <span class="task__priority-text">${object.prioritySelector}</span>
+    </div>
+    <div> 
+      <a class="task__edit" href="#" onclick="editTask(${object.id})">
+      <img src="./img/edit.svg" alt="" />
+      </a>
+      <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
+        <img src="./img/delete.svg" alt="" />
+      </a>
+    </div>
+     
   </div>
-  <a class="task__edit" href="#" onclick="editTask(${object.id})">
-    <img src="./img/edit.svg" alt="" />
-  </a>
-  <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
-    <img src="./img/delete.svg" alt="" />
-  </a>
-</div>
 </div>`;
 }
 function createHTMLCompletedTask(object) {
-  return `<div class="completed__task" id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><h3 class="completed__task-name">${object.name}</h3>
-  <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
+  return `<div class="completed__task" id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><div><h3 class="completed__task-name">${object.name}</h3><p class="task__description">${object.description}</p>
+  </div>
+  <div class="completed__task-options">
+  <a class="task__edit" href="#" onclick="editTask(${object.id})">
+      <img src="./img/edit.svg" alt="" />
+      </a>
+    <a class="task__delete" href="#" onclick="deleteTask(${object.id})">
     <img src="./img/delete.svg" alt="" />
   </a>
+  </div>
+  
 </div>
 </div>`;
 }
