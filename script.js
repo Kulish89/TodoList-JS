@@ -10,7 +10,7 @@ let reqTextarea = document.querySelector(".form__textarea");
 let reqInput = document.querySelector(".form__input");
 
 //
-const PRIORITY = { Critical: 3, Normal: 2, Minor: 1 };
+const PRIORITY = { Critical: "1", Normal: "2", Minor: "3" };
 //
 
 //
@@ -43,9 +43,9 @@ closeTaskButton.addEventListener("click", function (e) {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  let requairedElements = document.querySelectorAll("._req");
-  let error = validation(...requairedElements);
-  if (error === 0) {
+  try {
+    let requairedElements = document.querySelectorAll("._req");
+    validation(...requairedElements);
     let formdata = new FormData(form);
     let newObj = {};
     for (let [name, value] of formdata) {
@@ -65,6 +65,8 @@ form.addEventListener("submit", function (e) {
 
     render();
     resetForm();
+  } catch (error) {
+    console.log(error.message);
   }
 });
 
@@ -218,41 +220,37 @@ function setStorage(value) {
 
 function sortData(data, selector) {
   return data.sort(function (obj1, obj2) {
-    if (selector == "name") {
-      if (obj1[selector].toUpperCase() < obj2[selector].toUpperCase()) {
-        return -1;
-      }
-      if (obj1[selector].toUpperCase() > obj2[selector].toUpperCase()) {
-        return 1;
-      }
-      return 0;
-    } else {
-      return obj2[selector] - obj1[selector];
+    if (obj1[selector].toUpperCase() < obj2[selector].toUpperCase()) {
+      return -1;
+    }
+    if (obj1[selector].toUpperCase() > obj2[selector].toUpperCase()) {
+      return 1;
     }
   });
 }
 
 function validation(...args) {
-  let error = 0;
+  let button = document.querySelector(".form__button-submit");
   for (let reqElem of args) {
     if (reqElem.name == "name" && reqElem.value.length > 20) {
       reqElem.classList.add("error");
       reqElem.nextElementSibling.classList.add("active");
       reqElem.nextElementSibling.innerText = `Your name is too long!`;
-      error++;
+      button.dusabled = true;
+      throw new Error("The invalid value of input");
     } else if (reqElem.validity.valueMissing) {
       reqElem.classList.add("error");
       reqElem.nextElementSibling.classList.add("active");
       reqElem.nextElementSibling.innerText = `You need to enter ${reqElem.name}!`;
-      error++;
+      button.dusabled = true;
+      throw new Error("The invalid value of input");
     } else {
       reqElem.classList.remove("error");
       reqElem.nextElementSibling.innerText = "";
       reqElem.nextElementSibling.classList.remove("active");
+      button.dusabled = false;
     }
   }
-
-  return error;
 }
 
 function resetForm() {
