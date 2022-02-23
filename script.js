@@ -8,7 +8,23 @@ let sort = document.querySelector(".sort");
 let select = document.querySelector(".sort__select");
 let reqTextarea = document.querySelector(".form__textarea");
 let reqInput = document.querySelector(".form__input");
+let completedContainer = document.querySelector(".completed");
+let mainContainer = document.querySelector(".main__to-do");
 
+completedContainer.addEventListener("dragover", (e) => {
+  e.preventDefault();
+});
+mainContainer.addEventListener("dragover", (e) => {
+  e.preventDefault();
+});
+completedContainer.addEventListener("drop", function (ev) {
+  let itemId = ev.dataTransfer.getData("id");
+  toggleStatusTask(itemId);
+});
+mainContainer.addEventListener("drop", function (ev) {
+  let itemId = ev.dataTransfer.getData("id");
+  toggleStatusTask(itemId);
+});
 //
 const PRIORITY = { Critical: "1", Normal: "2", Minor: "3" };
 //
@@ -128,18 +144,16 @@ function editTask(id) {
     }
   });
 }
-function toggleStatusTask(id) {
-  let answer = confirm("Are you sure?");
-  if (answer) {
-    let data = JSON.parse(localStorage.getItem("data"));
-    let task = data.find((item) => {
-      return item.id === id;
-    });
-    task.completed = !task.completed;
 
-    localStorage.setItem("data", JSON.stringify(data));
-    render();
-  }
+function toggleStatusTask(id) {
+  let data = JSON.parse(localStorage.getItem("data"));
+  let task = data.find((item) => {
+    return item.id == id;
+  });
+  task.completed = !task.completed;
+
+  localStorage.setItem("data", JSON.stringify(data));
+  render();
 }
 function render() {
   let containerToDo = document.querySelector(".main__tasks");
@@ -165,7 +179,7 @@ function render() {
 }
 
 function createHTMLTask(object) {
-  return `<div class="task"  id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><div><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p></div>
+  return `<div class="task" id="${object.id}" draggable="true" ondragstart="dragstartHandler(event)"><div><h3 class="task__name">${object.name}</h3><p class="task__description">${object.description}</p></div>
   <div class="task__priority">
     <div class="task-priority-left">
       <img
@@ -188,7 +202,7 @@ function createHTMLTask(object) {
 </div>`;
 }
 function createHTMLCompletedTask(object) {
-  return `<div class="completed__task" id="${object.id}" ondblclick="toggleStatusTask(${object.id})"><div><h3 class="completed__task-name">${object.name}</h3><p class="task__description">${object.description}</p>
+  return `<div class="completed__task" id="${object.id}" draggable="true" ondragstart="dragstartHandler(event)"><div><h3 class="completed__task-name">${object.name}</h3><p class="task__description">${object.description}</p>
   </div>
   <div class="completed__task-options">
   <a class="task__edit" href="#" onclick="editTask(${object.id})">
@@ -273,4 +287,7 @@ function resetForm() {
   }
   form.id = "";
   form.reset();
+}
+function dragstartHandler(event) {
+  event.dataTransfer.setData("id", event.target.id);
 }
