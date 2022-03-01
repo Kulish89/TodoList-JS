@@ -1,12 +1,11 @@
 /* Обнуление */
-
 *,
 *::after,
 *::before {
   margin: 0;
   padding: 0;
   border: 0;
-  box-sizing: border-box; /* это, чтобы паддинг не увеличивал блоки*/
+  box-sizing: border-box;
 }
 a {
   text-decoration: none;
@@ -35,12 +34,296 @@ body {
   font-size: 14px;
   font-weight: 500;
   font-family: "Montserrat";
-  background: #e59b9b;
+  background: linear-gradient(to bottom right, #edc1d3, #91bdec);
+  padding: 15px 0 15px 0;
+  overflow: auto;
 }
-/* во враппере пишем оверфлоу хидден, чтобы не было горизонтального скрола */
+/* =========================================================================*/
 .wrapper {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  max-width: 90%;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 40px #8ca4d8;
+  border-radius: 30px;
+  padding: 30px;
+}
+.head {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.head__message {
+  font-size: 36px;
+  font-weight: 700;
+}
+.head__button {
+  padding: 8px 30px;
+  background: #884cb2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* ======POPUP==================================================== */
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease 0s;
+}
+.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup__body {
   min-height: 100%;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 10px;
+}
+.popup__content {
+  position: relative;
+  min-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 35px 40px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom right, #edc1d3, #91bdec);
+}
+.popup__close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.popup__close img {
+  width: 22px;
+}
+/* 
+
+ */
+/*================FORM NEW TASK================================================== */
+.form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.form__input {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1.5px solid #e0e0e0;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.form__input-error {
+  position: absolute;
+  color: #ffffff;
+  background-color: red;
+  opacity: 0.4;
+  top: 67px;
+  left: 40px;
+  border-radius: 5px;
+  padding: 2px 3px;
+  display: none;
+  box-shadow: 3px 3px 5px black;
+}
+.form__textarea-error {
+  position: absolute;
+  color: #ffffff;
+  background-color: red;
+  opacity: 0.4;
+  top: 140px;
+  left: 40px;
+  border-radius: 5px;
+  padding: 2px 3px;
+  display: none;
+  box-shadow: 3px 3px 5px black;
+}
+.active {
+  display: initial;
+}
+
+.form__textarea {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1.5px solid #e0e0e0;
+  width: 100%;
+  margin-bottom: 15px;
+  resize: none;
+}
+
+.form__priority-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  font-size: 18px;
+  color: #5c626d;
+}
+.form__radio-inputs {
+  display: flex;
+  color: #e0e0e0;
+  gap: 40px;
+}
+.form__radio-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.input__critical {
+  color: #eb5757;
+}
+.input__normal {
+  color: #f2c94c;
+}
+.input__minor {
+  color: #219653;
+}
+.form__button-submit {
+  position: absolute;
+  top: 5px;
+  right: 32px;
+  background-color: transparent;
+  cursor: pointer;
+}
+.form__button-submit img {
+  width: 22px;
+}
+
+/*===========MAIN TASKS CONTAINER================================================ */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.main__tasks {
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.main__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.task {
+  padding: 10px 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 60%;
+  border: solid #e0e0e0 1px;
+  border-radius: 5px;
+}
+.task__delete img {
+  width: 18px;
+}
+.task__edit img {
+  width: 18px;
+}
+.task__name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.task__description {
+  font-size: 14px;
+  font-weight: 400;
+  color: #5c626d;
+}
+.task__priority-text {
+  font-size: 12px;
+  font-weight: 400;
+  color: #5c626d;
+}
+.task__priority {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+}
+.task-priority-left {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+.task__priority-icon {
+  width: 10px;
+}
+/* =====block of completed tasks ============================================= */
+.completed__title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.completed__task-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.completed__task {
+  padding: 10px 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  width: 60%;
+  border: solid #e0e0e0 1px;
+  border-radius: 5px;
+}
+.completed__task-options {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 4px;
+}
+/* sort============================================================ */
+
+.sort {
+  padding: 5px 10px;
+  font-family: "Poppins";
+  font-size: 14px;
+  color: #7d859a;
+  border: 1.5px #e0e0e0 solid;
+  border-radius: 5px;
+  display: inline-block;
+}
+.none {
+  display: none;
+}
+
+.sort__select {
+  font-family: "Poppins";
+  font-size: 14px;
+  color: #7d859a;
+}
+.error {
+  box-shadow: 0 0 5px red;
 }

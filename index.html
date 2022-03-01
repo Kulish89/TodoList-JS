@@ -5,10 +5,104 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo List</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:,regular,600&display=swap"
+      rel="stylesheet"
+    />
     <link href="style.css" rel="stylesheet" type="" />
   </head>
   <body>
-    <div></div>
+    <div class="wrapper">
+      <div class="head">
+        <h1 class="head__message"></h1>
+        <a class="head__button" href="#">
+          <img src="./img/Group.svg" alt="" />
+          <span>Add new</span>
+        </a>
+      </div>
+      <div class="main">
+        <div class="main__to-do">
+          <h2 class="main__title">To Do:</h2>
+          <div class="main__sort sort">
+            <span>Sort by:</span>
+            <select class="sort__select" name="sort" id="">
+              <option selected value="priority">Priority</option>
+              <option value="name">Name</option>
+            </select>
+          </div>
+          <div class="main__tasks"></div>
+        </div>
+        <div class="main-completed completed">
+          <h2 class="completed__title">Completed:</h2>
+          <div class="completed__tasks"></div>
+        </div>
+      </div>
+    </div>
+    <div class="popup" id="popup">
+      <div class="popup__body">
+        <div class="popup__content close__popup">
+          <a href="#" class="popup__close"
+            ><img src="./img/close.svg" alt=""
+          /></a>
+          <form
+            novalidate
+            action="#"
+            class="popup__form form"
+            id=""
+            enctype="multipart/form-data"
+          >
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              class="form__input _req"
+              value=""
+              required
+            />
+            <span class="form__input-error"></span>
+            <textarea
+              type="text"
+              name="description"
+              placeholder="Description"
+              class="form__textarea _req"
+              value=""
+              required
+            ></textarea>
+            <span class="form__textarea-error"></span>
+            <div class="form__priority-text">
+              <p>Proirity Selector</p>
+              <div class="form__radio-inputs">
+                <label class="form__radio-item">
+                  <input
+                    checked
+                    type="radio"
+                    name="prioritySelector"
+                    value="Critical"
+                  />
+                  <p class="input__critical">Critical</p>
+                </label>
+                <label class="form__radio-item">
+                  <input type="radio" name="prioritySelector" value="Normal" />
+                  <p class="input__normal">Normal</p>
+                </label>
+                <label class="form__radio-item">
+                  <input type="radio" name="prioritySelector" value="Minor" />
+                  <p class="input__minor">Minor</p>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="form__button-submit">
+              <img src="./img/save.svg" alt="" />
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
